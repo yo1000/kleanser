@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?rewriteBatchedStatements=true&strictUpdates=false&generateSimpleParameterMetadata=true
+    name: test
+    username: root
+    password: rootPassword
+
+logging.level:
+  com.yo1000.kleanser.service.CleanseService: debug
+
+kleanser:
+  mask-ignores:
+    table-columns:
+      - users.password
+  older-value-mask:
+    boundary-date: 2015-01-01T00:00:00.000Z
+    created-at-column-name: created_at
+    updated-at-column-name: updated_at
+  irregular-value-mask:
+    table-columns:
+      - addresses.zip_code
