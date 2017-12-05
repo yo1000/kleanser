@@ -37,7 +37,7 @@ class GeneralValueMaskRepository(
 
         valuesAndCriteriaList.filter {
             it.updateValues.entries.any { valuesAndCriteriaList.requiresMask(it.key) }
-        }.parallelStream().forEach { updateValuesAndCriteria ->
+        }.forEach { updateValuesAndCriteria ->
             jdbcTemplate.update("""
             UPDATE
                 ${table.name}

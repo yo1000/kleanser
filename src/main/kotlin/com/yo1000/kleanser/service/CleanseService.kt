@@ -87,18 +87,17 @@ class CleanseService(
             !doneTableNames.contains(it.name)
         }
 
-        maskRepositories.forEach { maskRepository ->
-            LOGGER.info("Starting mask: {}", maskRepository::class.simpleName)
-            var doneCount = allTables.size - tables.size
-            tables.parallelStream().forEach { table ->
-                LOGGER.debug("Masking table({}/{}): {}", doneCount + 1, allTables.size, table)
+        var doneCount = allTables.size - tables.size
+        tables.parallelStream().forEach { table ->
+            LOGGER.debug("Masking table({}/{}): {}", doneCount + 1, allTables.size, table)
+            maskRepositories.forEach { maskRepository ->
                 maskRepository.mask(table)
-
-                FileWriter(resumeProps.progressFilePath, true).use {
-                    it.appendln(table.name)
-                }
-                doneCount++
+                LOGGER.info("Starting mask: {}", maskRepository::class.simpleName)
             }
+            FileWriter(resumeProps.progressFilePath, true).use {
+                it.appendln(table.name)
+            }
+            doneCount++
         }
     }
 }
