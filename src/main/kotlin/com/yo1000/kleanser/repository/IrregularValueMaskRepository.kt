@@ -73,7 +73,7 @@ class IrregularValueMaskRepository(
 
         valuesAndCriteriaList.filter {
             it.updateValues.entries.any { valuesAndCriteriaList.requiresMask(it.key) }
-        }.forEach { updateValuesAndCriteria ->
+        }.parallelStream().forEach { updateValuesAndCriteria ->
             jdbcTemplate.update("""
             UPDATE
                 ${table.name}

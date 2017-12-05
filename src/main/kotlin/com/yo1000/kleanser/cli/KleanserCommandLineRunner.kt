@@ -1,6 +1,7 @@
 package com.yo1000.kleanser.cli
 
 import com.yo1000.kleanser.config.MaskIgnoresProperties
+import com.yo1000.kleanser.config.ResumeProperties
 import com.yo1000.kleanser.repository.GeneralValueMaskRepository
 import com.yo1000.kleanser.repository.IrregularValueMaskRepository
 import com.yo1000.kleanser.repository.OlderValueMaskRepository
@@ -21,7 +22,8 @@ class KleanserCommandLineRunner(
         val maskedGeneralValueRepository: GeneralValueMaskRepository,
         val irregularValueMaskRepository: IrregularValueMaskRepository,
         val dataSourceProperties: DataSourceProperties,
-        val maskIgnoresProperties: MaskIgnoresProperties
+        val maskIgnoresProperties: MaskIgnoresProperties,
+        val resumeProperties: ResumeProperties
 ) : CommandLineRunner {
     override fun run(vararg args: String?) {
         CleanseService(
@@ -31,7 +33,8 @@ class KleanserCommandLineRunner(
                         maskedGeneralValueRepository,
                         irregularValueMaskRepository
                 ),
-                maskIgnoresProperties
+                maskIgnoresProperties,
+                resumeProperties
         ).cleanse(dataSourceProperties.name)
     }
 }
